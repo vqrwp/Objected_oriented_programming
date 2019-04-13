@@ -1,0 +1,13 @@
+#ifndef ERROR_CODES_H
+#define ERROR_CODES_H
+
+enum errors
+{
+    NO_ERRORS,
+    FILE_NOT_FOUND,
+    CONTENT_ERROR,
+    MEMORY_ALLOCATION,
+    NO_DOTS,
+    UNKNOWN_ERROR
+};
+#endif // ERROR_CODES_H

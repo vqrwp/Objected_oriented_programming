@@ -1,0 +1,83 @@
+#include "draw_frame.h"
+#include "points_and_edges.h"
+#include "grafics.h"
+#include <iostream>
+
+int check_len(int count)
+{
+    int err = 0;
+    if (count <= 0)
+        err = NO_DOTS;
+    return err;
+}
+
+point new_point(point *point_3d, drawing win)
+{
+    point new_point;
+    new_point.x = win.width + point_3d->x * win.length / (point_3d->z + win.length) ;
+    new_point.y = win.height - point_3d->y * win.length / (point_3d->z + win.length);
+
+    return new_point;
+}
+
+point *invert_points(points pts, drawing draw)
+{
+    point *inverted_points = new point [pts.count];
+    for (int i = 0; i < pts.count; i++)
+    {
+        inverted_points[i] = new_point(&pts.array_points[i], draw);
+    }
+
+    return inverted_points;
+}
+
+
+void addLine(graphics window, point point1, point point2)
+{
+    window.scene->addLine(QLine(int(point1.x), int(point1.y), int(point2.x), int(point2.y)));
+}
+
+void clear_scene(drawing draw)
+{
+    delete (draw.gV->scene());
+}
+
+void delete_dyn_mem(void *ptr)
+{
+    if (ptr)
+    free(ptr);
+}
+
+int draw_figure(drawing draw, points points_s, edges edges_s)
+{
+    graphics graph;
+    int err = init_graph(graph, draw.gV);
+    if (err)
+        return err;
+
+    point *inverted_points = invert_points(points_s, draw);
+
+    int len_connections_mas = edges_s.count;
+    edge *mas_connections = edges_s.array_edges;
+    for (int i = 0; i < len_connections_mas; i++)
+    {
+       addLine(graph, inverted_points[mas_connections[i].begin], inverted_points[mas_connections[i].end]);
+    }
+
+    delete_dyn_mem(inverted_points);
+    draw.gV->setScene(graph.scene);
+
+    return err;
+}
+
+int update_scene(frame frame_s, drawing draw)
+{
+    int err = check_len(frame_s.points_s.count);
+    if (err)
+        return err;
+
+    clear_scene(draw);
+    err = draw_figure(draw, frame_s.points_s, frame_s.edges_s);
+
+    return err;
+}
