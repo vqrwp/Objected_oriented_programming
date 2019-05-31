@@ -2,7 +2,7 @@
 4 semester BMSTU
 
 | Labs | State | Variant | IDE |
-| --- | --- | --- |
+| --- | --- | --- | --- |
 | 1 | passed | - | Qt |
 | 2 | passed | List | Clion |
 | 3 | passed | - | Qt |
