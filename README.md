@@ -6,5 +6,7 @@
 | 1 | passed | - | Qt |
 | 2 | passed | List | Clion |
 | 3 | passed | - | Qt |
-| 4 | working | - | Qt |
+| 4 | passed | - | Qt |
 | 5 | passed | Teapot | made in Creately |
+
+hurray to me got 5 before the exam
